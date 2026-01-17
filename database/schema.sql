@@ -26,13 +26,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `users`
 --
 
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `Fullname` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
   `role` enum('Caretaker','Tenant') NOT NULL,
-  `dateoflogin` datetime NOT NULL
+  `dateoflogin` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -43,7 +46,8 @@ CREATE TABLE `users` (
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_users_email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
